@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (
     QListView
 )
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
 import webbrowser
 
 from ui.styles import COLOR_TEXT_SECONDARY, COLOR_SUCCESS, COLOR_ERROR, COLOR_ACCENT
@@ -263,6 +264,13 @@ class SettingsPage(QWidget):
         about_layout = QVBoxLayout(about_group)
         about_layout.setSpacing(8)
         about_layout.setContentsMargins(20, 28, 20, 16)
+
+        about_logo = QLabel()
+        about_logo.setAlignment(Qt.AlignCenter)
+        _logo_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "logo.png")
+        if os.path.exists(_logo_path):
+            about_logo.setPixmap(QPixmap(_logo_path).scaled(64, 64, Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation))
+        about_layout.addWidget(about_logo)
 
         about_name = QLabel("MangaHunter - 漫画猎手")
         about_name.setObjectName("card_title")

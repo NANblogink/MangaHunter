@@ -3,7 +3,7 @@ import os
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt, QCoreApplication
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 
 from ui.main_window import MainWindow
 from utils.logger import log
@@ -20,6 +20,10 @@ def main():
     app = QApplication(sys.argv)
 
     app.setStyle("Fusion")
+
+    logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo.png")
+    if os.path.exists(logo_path):
+        app.setWindowIcon(QIcon(logo_path))
 
     font = QFont("Microsoft YaHei", 9)
     app.setFont(font)

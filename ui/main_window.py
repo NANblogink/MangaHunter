@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import (
     QSizePolicy, QApplication
 )
 from PyQt5.QtCore import Qt, QPoint, QRect
-from PyQt5.QtGui import QIcon, QCursor
+from PyQt5.QtGui import QIcon, QCursor, QPixmap
+import os
 
 from ui.styles import STYLESHEET, COLOR_BG_SIDEBAR, COLOR_ACCENT
 from ui.pages.login_page import LoginPage
@@ -96,6 +97,9 @@ class MainWindow(QMainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
 
         self.setWindowTitle("MangaHunter - 漫画猎手")
+        logo_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logo.png")
+        if os.path.exists(logo_path):
+            self.setWindowIcon(QIcon(logo_path))
         self.setMinimumSize(self._sv(1100), self._sv(750))
         self.resize(self._sv(1200), self._sv(800))
 
@@ -132,18 +136,25 @@ class MainWindow(QMainWindow):
         title_bar_lay.setContentsMargins(16, 0, 12, 0)
         title_bar_lay.setSpacing(0)
 
-        app_icon = QLabel("M")
+        app_icon = QLabel()
         app_icon.setFixedSize(22, 22)
         app_icon.setAlignment(Qt.AlignCenter)
-        app_icon.setStyleSheet("""
-            QLabel {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #6C5CE7, stop:1 #A29BFE);
-                color: white;
-                font-size: 13px;
-                font-weight: bold;
-                border-radius: 5px;
-            }
-        """)
+        _logo_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logo.png")
+        if os.path.exists(_logo_path):
+            _logo_pixmap = QPixmap(_logo_path).scaled(22, 22, Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
+            app_icon.setPixmap(_logo_pixmap)
+            app_icon.setStyleSheet("QLabel { border-radius: 5px; }")
+        else:
+            app_icon.setText("M")
+            app_icon.setStyleSheet("""
+                QLabel {
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #6C5CE7, stop:1 #A29BFE);
+                    color: white;
+                    font-size: 13px;
+                    font-weight: bold;
+                    border-radius: 5px;
+                }
+            """)
         title_bar_lay.addWidget(app_icon)
 
         app_label = QLabel(" MangaHunter")
