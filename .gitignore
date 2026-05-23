@@ -8,3 +8,9 @@ download_history.json
 dist/
 build/
 .env
+*.exe
+*.ico
+*.spec
+main.build/
+main.dist/
+main.onefile-build/
